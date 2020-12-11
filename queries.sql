@@ -9,6 +9,15 @@ GROUP BY fact_table.SUPPLIER_ID
 ORDER BY fact_table.PRODUCT_ID ASC;
 #Q1 ENDS
 
+#Q2
+SELECT product.PRODUCT_Name, time.MONTH month, sum(fact_table.sale) Sale
+FROM supplier join product join fact_table
+JOIN time
+ON (product.PRODUCT_ID = fact_table.PRODUCT_ID) AND (time.TIME_ID = fact_table.TIME_ID) and (supplier.SUPPLIER_ID = fact_table.SUPPLIER_ID)
+WHERE supplier.SUPPLIER_NAME="3M Company" and time.YEAR="2016"
+group by  month , product.PRODUCT_NAME with rollup;
+#Q2 ENDS
+
 #Q3
 select sales.PRODUCT_ID, p.PRODUCT_NAME, sum(sales.QUANTITY) as 'SALE(Weekend)'
 from fact_table sales 
